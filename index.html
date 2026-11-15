@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ColorCart Stationery</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PDF GENERATOR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <div class="logo">
+            ✏️ ColorCart
+        </div>
+
+        <nav>
+            <a href="#products">Products</a>
+            <a href="#about">About</a>
+
+            <button class="cart-button" onclick="openCart()">
+                🛒 Cart
+                <span id="cartCount">0</span>
+            </button>
+        </nav>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <span class="hero-tag">
+                ✨ Everything You Need
+            </span>
+
+            <h1>
+                Make Your Ideas
+                <span>Colorful.</span>
+            </h1>
+
+            <p>
+                Quality stationery for students,
+                creators and professionals.
+            </p>
+
+            <a href="#products" class="shop-now">
+                Shop Now →
+            </a>
+
+        </div>
+
+        <div class="hero-illustration">
+            📚 ✏️ 🖊️
+        </div>
+
+    </section>
+
+
+    <!-- ================= CATEGORIES ================= -->
+
+    <section class="categories">
+
+        <button onclick="filterProducts('all')">
+            🛍️ All
+        </button>
+
+        <button onclick="filterProducts('writing')">
+            ✏️ Writing
+        </button>
+
+        <button onclick="filterProducts('paper')">
+            📒 Paper
+        </button>
+
+        <button onclick="filterProducts('school')">
+            🎒 School
+        </button>
+
+        <button onclick="filterProducts('office')">
+            💼 Office
+        </button>
+
+    </section>
+
+
+    <!-- ================= PRODUCTS ================= -->
+
+    <main id="products">
+
+        <div class="section-title">
+
+            <div>
+                <span>OUR COLLECTION</span>
+                <h2>Popular Stationery</h2>
+            </div>
+
+            <p id="productCount">
+                12 products
+            </p>
+
+        </div>
+
+
+        <div id="productGrid" class="product-grid"></div>
+
+    </main>
+
+
+    <!-- ================= CART MODAL ================= -->
+
+    <div id="cartModal" class="modal">
+
+        <div class="modal-content cart-modal">
+
+            <div class="modal-header">
+
+                <h2>🛒 Your Cart</h2>
+
+                <button onclick="closeCart()" class="close">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div id="cartItems"></div>
+
+
+            <div id="emptyCart" class="empty-cart">
+
+                <div>🛒</div>
+
+                <h3>Your cart is empty</h3>
+
+                <p>Add some stationery items to continue.</p>
+
+            </div>
+
+
+            <div id="cartSummary" class="cart-summary">
+
+                <div>
+                    <span>Subtotal</span>
+                    <strong id="subtotal">₹0.00</strong>
+                </div>
+
+                <div>
+                    <span>Delivery</span>
+                    <strong id="delivery">₹0.00</strong>
+                </div>
+
+                <div class="grand-total">
+                    <span>Total</span>
+                    <strong id="total">₹0.00</strong>
+                </div>
+
+                <button
+                    class="checkout-btn"
+                    onclick="goToCheckout()">
+
+                    Proceed to Checkout →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CHECKOUT ================= -->
+
+    <section id="checkoutPage" class="checkout-page">
+
+        <div class="checkout-container">
+
+            <button
+                class="back-button"
+                onclick="backToCart()">
+
+                ← Back to Cart
+
+            </button>
+
+
+            <div class="checkout-title">
+
+                <span>CHECKOUT</span>
+
+                <h1>Complete Your Order</h1>
+
+            </div>
+
+
+            <div class="checkout-layout">
+
+
+                <!-- CUSTOMER DETAILS -->
+
+                <div class="checkout-card">
+
+                    <h2>👤 Customer Details</h2>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>
+                                Full Name *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customerName"
+                                placeholder="Enter your name">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Email *
+                            </label>
+
+                            <input
+                                type="email"
+                                id="customerEmail"
+                                placeholder="example@email.com">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Phone Number *
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="customerPhone"
+                                placeholder="10-digit mobile number">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Pincode *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="pincode"
+                                placeholder="605001">
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Delivery Address *
+                            </label>
+
+                            <textarea
+                                id="address"
+                                rows="4"
+                                placeholder="Enter complete delivery address"></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAYMENT -->
+
+                <div class="checkout-card">
+
+                    <h2>💳 Payment Method</h2>
+
+
+                    <div class="payment-methods">
+
+                        <button
+                            class="payment-option active"
+                            onclick="selectPayment('upi', this)">
+
+                            <span>📱</span>
+
+                            <div>
+                                <strong>UPI</strong>
+                                <small>Google Pay, PhonePe, Paytm</small>
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            class="payment-option"
+                            onclick="selectPayment('card', this)">
+
+                            <span>💳</span>
+
+                            <div>
+                                <strong>Credit / Debit Card</strong>
+                                <small>Visa, Mastercard, RuPay</small>
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            class="payment-option"
+                            onclick="selectPayment('netbanking', this)">
+
+                            <span>🏦</span>
+
+                            <div>
+                                <strong>Net Banking</strong>
+                                <small>All major banks</small>
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            class="payment-option"
+                            onclick="selectPayment('wallet', this)">
+
+                            <span>💼</span>
+
+                            <div>
+                                <strong>Wallets</strong>
+                                <small>Paytm, Mobikwik, etc.</small>
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            class="payment-option"
+                            onclick="selectPayment('cod', this)">
+
+                            <span>💵</span>
+
+                            <div>
+                                <strong>Cash on Delivery</strong>
+                                <small>Pay when your order arrives</small>
+                            </div>
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- UPI -->
+
+                    <div
+                        id="upiPayment"
+                        class="payment-form">
+
+                        <label>UPI ID</label>
+
+                        <input
+                            type="text"
+                            id="upiId"
+                            placeholder="example@upi">
+
+                        <p>
+                            Demo payment interface.
+                            No real payment will be charged.
+                        </p>
+
+                    </div>
+
+
+                    <!-- CARD -->
+
+                    <div
+                        id="cardPayment"
+                        class="payment-form hidden">
+
+                        <label>Card Number</label>
+
+                        <input
+                            type="text"
+                            id="cardNumber"
+                            maxlength="19"
+                            placeholder="1234 5678 9012 3456">
+
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label>Expiry</label>
+
+                                <input
+                                    type="text"
+                                    id="expiry"
+                                    placeholder="MM/YY">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>CVV</label>
+
+                                <input
+                                    type="password"
+                                    id="cvv"
+                                    maxlength="3"
+                                    placeholder="•••">
+
+                            </div>
+
+                        </div>
+
+
+                        <label>Card Holder Name</label>
+
+                        <input
+                            type="text"
+                            id="cardName"
+                            placeholder="Name on card">
+
+                    </div>
+
+
+                    <!-- NET BANKING -->
+
+                    <div
+                        id="netbankingPayment"
+                        class="payment-form hidden">
+
+                        <label>Select Bank</label>
+
+                        <select id="bank">
+
+                            <option value="">
+                                Select your bank
+                            </option>
+
+                            <option>State Bank of India</option>
+                            <option>HDFC Bank</option>
+                            <option>ICICI Bank</option>
+                            <option>Axis Bank</option>
+                            <option>Kotak Mahindra Bank</option>
+                            <option>Bank of Baroda</option>
+                            <option>Punjab National Bank</option>
+                            <option>Canara Bank</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- WALLET -->
+
+                    <div
+                        id="walletPayment"
+                        class="payment-form hidden">
+
+                        <label>Select Wallet</label>
+
+                        <select id="wallet">
+
+                            <option value="">
+                                Select wallet
+                            </option>
+
+                            <option>Paytm</option>
+                            <option>MobiKwik</option>
+                            <option>Amazon Pay</option>
+                            <option>Freecharge</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- COD -->
+
+                    <div
+                        id="codPayment"
+                        class="payment-form cod-message hidden">
+
+                        <div class="cod-icon">
+                            💵
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Cash on Delivery
+                            </strong>
+
+                            <p>
+                                Pay in cash when your
+                                order is delivered.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ORDER SUMMARY -->
+
+                <div class="checkout-card order-summary">
+
+                    <h2>🧾 Order Summary</h2>
+
+                    <div id="checkoutItems"></div>
+
+
+                    <div class="summary-line">
+
+                        <span>Subtotal</span>
+
+                        <strong id="checkoutSubtotal">
+                            ₹0.00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-line">
+
+                        <span>Delivery</span>
+
+                        <strong id="checkoutDelivery">
+                            ₹0.00
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-total">
+
+                        <span>Total</span>
+
+                        <strong id="checkoutTotal">
+                            ₹0.00
+                        </strong>
+
+                    </div>
+
+
+                    <button
+                        class="place-order-btn"
+                        onclick="placeOrder()">
+
+                        🔒 Place Order
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= SUCCESS ================= -->
+
+    <section
+        id="successPage"
+        class="success-page">
+
+        <div class="success-card">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h1>Order Confirmed!</h1>
+
+            <p>
+                Thank you for shopping with
+                <strong>ColorCart</strong>.
+            </p>
+
+
+            <div class="order-number">
+
+                Order ID
+
+                <strong id="orderId">
+                    CC000000
+                </strong>
+
+            </div>
+
+
+            <div class="success-details">
+
+                <div>
+                    <span>Payment</span>
+                    <strong id="successPayment">
+                        -
+                    </strong>
+                </div>
+
+                <div>
+                    <span>Total</span>
+                    <strong id="successTotal">
+                        ₹0.00
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <button
+                class="download-btn"
+                onclick="downloadReceipt()">
+
+                📥 Download PDF Invoice
+
+            </button>
+
+
+            <button
+                class="continue-btn"
+                onclick="continueShopping()">
+
+                ← Continue Shopping
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer id="about">
+
+        <div class="footer-logo">
+          
+            ✏️ ColorCart
+        </div>
+
+        <p>
+            Your colorful destination for
+            everyday stationery.
+        </p>
+
+        <p class="copyright">
+            © 2026 ColorCart Stationery
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
